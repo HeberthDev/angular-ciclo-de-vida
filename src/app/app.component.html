@@ -8,6 +8,7 @@
       <div *ngFor="let item of listaDeCompra">
         <app-item
           [item]="item"
+          (emitirItemParaEditar)="editarItem($event)"
         ></app-item>
       </div>
     </div>
