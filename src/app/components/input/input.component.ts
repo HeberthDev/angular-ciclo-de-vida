@@ -9,6 +9,8 @@ import { Item } from './../../interfaces/iItem';
 })
 export class InputComponent implements OnInit, OnChanges {
   @Input() itemQueVaiSerEditado!: Item;
+  editando = false;
+  textoBtn = 'Salvar item';
 
   valorItem!: string;
 
@@ -20,6 +22,9 @@ export class InputComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges){
     if (!changes['itemQueVaiSerEditado'].firstChange) {
+      this.editando = true;
+      this.textoBtn = 'Editar item';
+
       this.valorItem = this.itemQueVaiSerEditado?.nome;
     }
   }
@@ -31,6 +36,15 @@ export class InputComponent implements OnInit, OnChanges {
   }
 
   limparCampo() {
-    this.valorItem = "";
+    this.valorItem = ' ';
+  }
+
+  editarItem() {
+    this.servicoListaDeCompra.editarItemDaLista(this.itemQueVaiSerEditado, this.valorItem);
+
+    this.limparCampo();
+
+    this.editando = false;
+    this.textoBtn = 'Salvar item';
   }
 }
