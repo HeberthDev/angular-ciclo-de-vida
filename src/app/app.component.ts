@@ -8,8 +8,9 @@ import { Item } from './interfaces/iItem';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app-lista-de-compras';
+  public title = 'app-lista-de-compras';
   public listaDeCompras !: Array<Item>;
+  public itemParaSerEditado !: Item;
 
   constructor(
     private listaService: ListaDeCompraService,
@@ -18,5 +19,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.listaDeCompras = this.listaService.getListaDeCompra();
     console.log('listaDeCompras -> ', this.listaDeCompras);
+  }
+
+  public editarItem(item: Item) {
+    this.itemParaSerEditado = item;
   }
 }
