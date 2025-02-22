@@ -34,7 +34,7 @@ export class ListaDeCompraService {
 
     this.listaDeCompra.push(item);
 
-    this.atualizarLocalStorage();
+    // this.atualizarLocalStorage();
   }
 
   public editarItemDaLista(itemAntigo: Item, nomeEditadoDoItem: string) {
@@ -49,10 +49,10 @@ export class ListaDeCompraService {
 
     this.listaDeCompra.splice(Number(id) - 1, 1, itemEditado);
 
-    this.atualizarLocalStorage();
+    // this.atualizarLocalStorage();
   }
 
-  private atualizarLocalStorage() {
+  public atualizarLocalStorage() {
     localStorage.setItem('itens', JSON.stringify(this.listaDeCompra));
   }
 }
