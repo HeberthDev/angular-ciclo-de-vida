@@ -6,34 +6,17 @@ import { Injectable } from '@angular/core';
 })
 export class ListaDeCompraService {
 
-  private listaDeCompra: Item[] = [
-    {
-      "id": 1,
-      "nome": "Queijo prato",
-      "data": "Segunda-feira (31/10/2022) às 08:30",
-      "comprado": false
-    },
-    {
-      "id": 2,
-      "nome": "Leite integral",
-      "data": "Segunda-feira (31/10/2022) às 08:30",
-      "comprado": false
-    },
-    {
-      "id": 3,
-      "nome": "Mamão papaia",
-      "data": "Segunda-feira (31/10/2022) às 08:30",
-      "comprado": true
-    },
-  ]
+  private listaDeCompra: Item[];
 
-  constructor() { }
+  constructor() {
+    this.listaDeCompra = JSON.parse(localStorage.getItem('itens') || '[]');
+  }
 
-  getListaDeCompra(){
+  public getListaDeCompra(){
     return this.listaDeCompra;
   }
 
-  criarItem(nomeDoItem: string) {
+  public criarItem(nomeDoItem: string) {
     const id = this.listaDeCompra.length + 1;
 
     const item: Item = {
@@ -46,13 +29,15 @@ export class ListaDeCompraService {
     return item;
   }
 
-  adicionarItemNaLista(nomeDoItem: string) {
+  public adicionarItemNaLista(nomeDoItem: string) {
     const item = this.criarItem(nomeDoItem);
 
     this.listaDeCompra.push(item);
+
+    // this.atualizarLocalStorage();
   }
 
-  editarItemDaLista(itemAntigo: Item, nomeEditadoDoItem: string) {
+  public editarItemDaLista(itemAntigo: Item, nomeEditadoDoItem: string) {
     const itemEditado: Item = {
       id: itemAntigo.id,
       nome: nomeEditadoDoItem,
@@ -63,5 +48,11 @@ export class ListaDeCompraService {
     const id = itemAntigo.id;
 
     this.listaDeCompra.splice(Number(id) - 1, 1, itemEditado);
+
+    // this.atualizarLocalStorage();
+  }
+
+  public atualizarLocalStorage() {
+    localStorage.setItem('itens', JSON.stringify(this.listaDeCompra));
   }
 }
