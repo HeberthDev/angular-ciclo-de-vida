@@ -12,11 +12,11 @@ export class ListaDeCompraService {
     this.listaDeCompra = JSON.parse(localStorage.getItem('itens') || '[]');
   }
 
-  getListaDeCompra(){
+  public getListaDeCompra(){
     return this.listaDeCompra;
   }
 
-  criarItem(nomeDoItem: string) {
+  public criarItem(nomeDoItem: string) {
     const id = this.listaDeCompra.length + 1;
 
     const item: Item = {
@@ -29,13 +29,15 @@ export class ListaDeCompraService {
     return item;
   }
 
-  adicionarItemNaLista(nomeDoItem: string) {
+  public adicionarItemNaLista(nomeDoItem: string) {
     const item = this.criarItem(nomeDoItem);
 
     this.listaDeCompra.push(item);
+
+    this.atualizarLocalStorage();
   }
 
-  editarItemDaLista(itemAntigo: Item, nomeEditadoDoItem: string) {
+  public editarItemDaLista(itemAntigo: Item, nomeEditadoDoItem: string) {
     const itemEditado: Item = {
       id: itemAntigo.id,
       nome: nomeEditadoDoItem,
@@ -46,5 +48,11 @@ export class ListaDeCompraService {
     const id = itemAntigo.id;
 
     this.listaDeCompra.splice(Number(id) - 1, 1, itemEditado);
+
+    this.atualizarLocalStorage();
+  }
+
+  private atualizarLocalStorage() {
+    localStorage.setItem('itens', JSON.stringify(this.listaDeCompra));
   }
 }
